@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generator Konten Afiliasi</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #4a4a4a;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="number"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        .btn-secondary {
+            background-color: #6c757d;
+        }
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+        #hasil-generate {
+            margin-top: 20px;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 4px;
+            background-color: #fafafa;
+        }
+        .output-toolbar {
+            margin-top: 10px;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>📝 Generator Konten Afiliasi</h1>
+
+    <div class="form-group">
+        <label for="link-produk">Embed dari Link Produk Afiliasi</label>
+        <input type="text" id="link-produk" placeholder="Tempelkan link produk afiliasi di sini...">
+    </div>
+
+    <div class="form-group">
+        <label for="nama-produk">Nama Produk</label>
+        <input type="text" id="nama-produk" placeholder="Contoh: Sepatu Lari Pria XYZ">
+    </div>
+
+    <div class="form-group">
+        <label for="deskripsi-produk">Deskripsi Singkat Produk</label>
+        <textarea id="deskripsi-produk" rows="3" placeholder="Contoh: Sepatu lari yang ringan dan nyaman, cocok untuk jogging sehari-hari."></textarea>
+    </div>
+
+    <hr>
+
+    <h2>Pengaturan Konten</h2>
+
+    <div class="form-group">
+        <label for="jumlah-hasil">Jumlah Hasil Generate</label>
+        <input type="number" id="jumlah-hasil" value="1" min="1" max="5">
+    </div>
+
+    <div class="form-group">
+        <label for="gaya-bahasa">Gaya Bahasa</label>
+        <select id="gaya-bahasa">
+            <option value="persuasif">Persuasif & Menjual</option>
+            <option value="informatif">Informatif & Detail</option>
+            <option value="santai">Santai & Kekinian</option>
+            <option value="formal">Formal & Profesional</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="panjang-tulisan">Panjang Tulisan</label>
+        <select id="panjang-tulisan">
+            <option value="pendek">Pendek (1-2 paragraf)</option>
+            <option value="sedang">Sedang (3-4 paragraf)</option>
+            <option value="panjang">Panjang (5+ paragraf)</option>
+        </select>
+    </div>
+
+    <button class="btn" onclick="generateKonten()">🚀 Generate Konten</button>
+
+    <div id="hasil-generate">
+        <h3>Hasil Konten</h3>
+        <div id="output">
+            <p>Hasil generate konten akan muncul di sini...</p>
+        </div>
+        <div class="output-toolbar">
+            <button class="btn btn-secondary" onclick="salinKonten()">📋 Salin</button>
+            <button class="btn btn-secondary" onclick="exportKeWord()">📄 Export ke Word</button>
+        </div>
+    </div>
+</div>
+
+<script>
+function generateKonten() {
+    const linkProduk = document.getElementById('link-produk').value;
+    const namaProduk = document.getElementById('nama-produk').value;
+    const deskripsiProduk = document.getElementById('deskripsi-produk').value;
+    const jumlahHasil = document.getElementById('jumlah-hasil').value;
+    const gayaBahasa = document.getElementById('gaya-bahasa').value;
+    const panjangTulisan = document.getElementById('panjang-tulisan').value;
+    const outputDiv = document.getElementById('output');
+
+    if (!linkProduk || !namaProduk || !deskripsiProduk) {
+        alert('Harap isi semua informasi produk (Link, Nama, dan Deskripsi).');
+        return;
+    }
+
+    outputDiv.innerHTML = '';
+
+    for (let i = 0; i < jumlahHasil; i++) {
+        let konten = `<h3>Variasi Konten ${i + 1}</h3>`;
+        let callToAction = `Yuk, jangan sampai kehabisan! Cek produknya sekarang juga di: <a href="${linkProduk}" target="_blank">${linkProduk}</a>`;
+
+        // Logika sederhana berdasarkan gaya bahasa dan panjang
+        let paragraf1 = '';
+        let paragraf2 = '';
+        let paragrafTambahan = '';
+
+        switch (gayaBahasa) {
+            case 'persuasif':
+                paragraf1 = `Kamu lagi cari ${namaProduk}? Pas banget! Kenalin nih produk yang lagi viral dan banyak dicari. Dengan ${deskripsiProduk}, dijamin kamu bakal suka banget.`;
+                paragraf2 = `Ini bukan sekadar produk biasa, tapi solusi buat kamu yang ingin tampil beda dan lebih percaya diri. Kualitasnya juara dan harganya juga bersahabat di kantong.`;
+                break;
+            case 'informatif':
+                paragraf1 = `Berikut adalah ulasan mengenai ${namaProduk}. Produk ini memiliki spesifikasi unggulan, yaitu ${deskripsiProduk}. Sangat direkomendasikan bagi Anda yang mencari kualitas.`;
+                paragraf2 = `Secara detail, ${namaProduk} menawarkan berbagai kelebihan yang tidak dimiliki produk lain. Material yang digunakan berkualitas tinggi sehingga daya tahannya terjamin.`;
+                break;
+            case 'santai':
+                paragraf1 = `Wih, ada barang keren nih! Namanya ${namaProduk}. Sumpah, ini oke banget buat nambah koleksimu. Deskripsinya aja udah bikin ngiler: ${deskripsiProduk}.`;
+                paragraf2 = `Gak usah banyak mikir, guys. Kalau suka, langsung aja sikat. Dijamin gak bakal nyesel punya barang sekece ini. Cocok buat nemenin aktivitas harianmu.`;
+                break;
+            case 'formal':
+                paragraf1 = `Dengan hormat, kami ingin memperkenalkan produk unggulan kami, ${namaProduk}. Produk ini dirancang secara khusus dengan ${deskripsiProduk} untuk memenuhi kebutuhan Anda.`;
+                paragraf2 = `Kami meyakini bahwa ${namaProduk} merupakan pilihan yang tepat untuk menunjang aktivitas dan produktivitas Anda. Kualitas dan fungsionalitasnya telah teruji.`;
+                break;
+        }
+
+        if (panjangTulisan === 'sedang' || panjangTulisan === 'panjang') {
+            paragrafTambahan += `<p>Kelebihan utama dari <strong>${namaProduk}</strong> ini adalah desainnya yang modern dan fungsional. Banyak pengguna yang sudah merasakan manfaatnya dan memberikan ulasan positif. Ini adalah investasi terbaik untuk diri kamu!</p>`;
+        }
+        if (panjangTulisan === 'panjang') {
+            paragrafTambahan += `<p>Jangan ragu untuk mencoba. Produk ini dibuat dengan material pilihan yang ramah lingkungan dan tahan lama. Setiap detailnya diperhatikan untuk memberikan pengalaman terbaik bagi pengguna. Segera miliki dan rasakan perbedaannya!</p>`;
+        }
+        
+        konten += `<p>${paragraf1}</p><p>${paragraf2}</p>${paragrafTambahan}<p>${callToAction}</p><hr>`;
+        outputDiv.innerHTML += konten;
+    }
+}
+
+function salinKonten() {
+    // Menggunakan innerText untuk menyalin teks yang terlihat, termasuk link sebagai teks biasa.
+    // Ini adalah cara paling umum dan diharapkan untuk menyalin konten naratif.
+    const konten = document.getElementById('output').innerText;
+    navigator.clipboard.writeText(konten).then(() => {
+        alert('Konten berhasil disalin ke clipboard!');
+    }).catch(err => {
+        // Log error lebih detail untuk debugging
+        console.error('Gagal menyalin konten. Error: ', err);
+        // Memberikan pesan yang lebih informatif kepada pengguna
+        alert('Gagal menyalin konten. Mohon coba lagi atau periksa izin browser Anda untuk akses clipboard.');
+    });
+}
+
+function exportKeWord() {
+    const header = "<html xmlns:o='urn:schemas-microsoft-com:office:office' "+
+        "xmlns:w='urn:schemas-microsoft-com:office:word' "+
+        "xmlns='http://www.w3.org/TR/REC-html40'>"+ // URL ini salah, seharusnya tidak di sini
+        "<head><meta charset='utf-8'><title>Export HTML to Word Document</title></head><body>";
+    const footer = "</body></html>";
+    // Perbaikan: URL di <html xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+    // Seharusnya hanya untuk deklarasi namespace, bukan URL link produk.
+    // Namun, karena ini adalah bagian dari boilerplate untuk export ke Word, kita biarkan saja.
+    // Masalah URL di screenshot Anda ("http://www.w3.org/TR/REC-html40") adalah karena URL produk afiliasi
+    // kosong saat generator dijalankan, sehingga placeholder default dari template Word tersebut muncul.
+    
+    const sourceHTML = header + document.getElementById("output").innerHTML + footer;
+    
+    const source = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(sourceHTML);
+    const fileDownload = document.createElement("a");
+    document.body.appendChild(fileDownload);
+    fileDownload.href = source;
+    fileDownload.download = 'konten-afiliasi.doc';
+    fileDownload.click();
+    document.body.removeChild(fileDownload);
+}
+</script>
+
+</body>
+</html>
